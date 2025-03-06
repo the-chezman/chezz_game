@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head> <!--style class acts as internal css, applies to all-->
+        <meta charset="UTF-8"><!--encoding/decoding system-->
+        
+        <title>Chezman First Website</title>
+        <link rel="icon" type="image/x-icon" href="mediaFiles/creep.png">
+        <link rel="stylesheet" href="webStyle.css"> <!--links the css sheet-->
+
+        <!--sets metadata about website (on search engines)-->
+
+        
+        <meta name="description" content="Free Web tutorials">
+        <meta name="keywords" content="HTML, CSS, JavaScript">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"><!--sets screen for all devices-->
+        <meta name="author" content="CHEZMAN"> 
+    </head>
+
+
+
+<body> <!--all the elements of the actual website-->
+    <section>
+    <div id="theTitle" class="title">
+        <h1>Chez Catalog but a website^tm (and other things)</h1>
+    </div>
+
+    <h2><a href="page_two.html">OTHER PAGE</a></h2>
+
+        <div class="subtext">
+            <p title="tooltip wow"><b>We have many chez of all types and ages and features many yum yes yaya!</b></p>
+        </div>   
+    </section>
+
+    <section>
+        <img src="mediaFiles/desmos chez.png" width="500" height="500"> 
+        <img src="mediaFiles/animeChez.png" style="position:relative" height="500px">
+
+        <a href="https://www.youtube.com/watch?v=wjOj_6cMGEY"> 
+        <img src="mediaFiles/jayvan.png" style="position:relative;" height="500px">
+        </a>
+
+        <img src="mediaFiles/kingchez.png" style="position:relative" height="500px">
+        <img src="mediaFiles/burger.png" style="transform: translate(-800px,3400px); height: 500px;">
+    </section>
+
+
+        <div class="lilbox">
+            <p>Here is a link to a cool song that is not related in any way: 
+            <br><a href="https://www.youtube.com/watch?v=us4oUCsE0HM">cool song</a></p>
+        </div>
+
+    <video id="boplRage" controls> <!--controls needed to play the video-->
+        <source src="mediaFiles/8mb.video-Mxn-eKvasovD.mp4" type="video/mp4">
+        sound is displayed in the actual website
+    </video>
+
+    <img src="mediaFiles/teto.gif">
+
+    <div class="list">
+        <ol>
+            <li>chez</li>
+            <li>chez2</li>
+            <li>chez3</li>
+            <li>chez4</li>
+        </ol>
+    </div>
+
+    
+    <div class="poem">
+        <pre> <!--pre-formatted-->
+            <b>chez went on a stroll one day
+
+            ouch! he said as a car drove into him!
+
+            "im wolkin hyear!"</b>
+        </pre>
+    </div>
+
+    <div class="bookmark">
+        <a href="#theTitle">jump to the top again!</a>
+    </div>
+
+    <div class="table">
+    <table>
+        <tr>
+          <th>friends</th>
+          <th>likes</th>
+          <th>dislikes</th>
+        </tr>
+        <tr>
+          <td>the fatso</td>
+          <td>FOOD!!!!</td>
+          <td>buffet running out of food</td>
+        </tr>
+        <tr>
+          <td>konnor</td>
+          <td>zest fest 20XX</td>
+          <td>furys</td>
+        </tr>
+        <tr>
+            <td>felipe</td>
+            <td>miku</td>
+            <td>strange implications</td>
+        </tr>
+        <tr>
+            <td>jackson</td>
+            <td>yangs cousin</td>
+            <td>skin cancer</td>
+        </tr>
+      </table>
+    </div>
+
+    <div>
+        <iframe src="https://8mb.video/" height="500" width="500"></iframe>
+    </div><!--Able to inline another website into this website-->
+
+
+    <button style="height: 100px;" id="buttonColor" type="button" onclick="changeColor()">click me to change color (JAVASCRIPT!!!)</button>
+    <button style="height: 100px; align-self: center;" id="buttonSize" type="button" onclick="changeSize()">click me to change size</button>
+    <button style="height: 100px; align-self: center;" id="buttonGame" type="button">click me to play finding game</button>
+    <p id="findingGameLabel" style="background-color: brown; max-width: 200px;">For button finding game!!</p>
+
+    <form>
+        <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
+        <label for="vehicle1"> I have a bike</label><br>
+        <input type="checkbox" id="vehicle2" name="vehicle2" value="Car">
+        <label for="vehicle2"> I have a car</label><br>
+        <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">
+        <label for="vehicle3"> I have a boat</label>
+    </form>
+
+    <canvas id="myCanvas" width="500" height="500" style="border:2px solid #000000;"></canvas>
+
+
+
+
+<!--CODES THE PROGRAM-->
+<script src="websiteJavascript.js"></script>
+</body>
+</html>

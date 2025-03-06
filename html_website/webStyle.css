@@ -1,0 +1,70 @@
+div.table, th, td {
+    border: 1px solid black;
+    background-color: aquamarine;
+    border-radius: 10px;
+    text-align: center;
+    width: 500px;
+}
+
+body {
+    background-image: url(mediaFiles/fatso.png);
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    padding-bottom: 2000px; /* adds extra space to scroll at bottom */
+}
+
+ol {
+    font-size: larger;
+    text-align: center;
+    margin: auto;
+    
+}
+
+
+
+div.title {
+   
+    color: rgb(14, 193, 133);
+}
+
+div.subtext {
+   
+    
+    background-color: blueviolet; 
+    max-width: 600px;
+}
+
+div.lilbox {
+
+border: 10px solid;
+background-color: aqua; 
+max-width: 500px;
+
+}
+
+div.list {
+
+background-color: burlywood; 
+max-width: 100px;
+
+}
+
+div.poem {
+
+    color: rgb(255, 0, 0);
+    font-family: Verdana, Geneva, Tahoma, sans-serif; 
+    font-size: large;
+}
+
+div.bookmark {
+
+    background-color: chocolate;
+    max-width: 150px;
+}
+    
+#boplRage {
+
+    height: 300px; 
+    
+}
