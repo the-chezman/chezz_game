@@ -3,8 +3,7 @@ chezz chess
  oh yeah !!!!!!!!!! vector
 
 FOR SAM MUSH
-[https://prod.liveshare.vsengsaas.visualstudio.com/join?A3842BE7C76FF4ACB9BB0952F33418FC3D7C  ] (https://app.screencastify.com/v3/watch/serNomkp5m8z4O2j2sf4)
-
+https://prod.liveshare.vsengsaas.visualstudio.com/join?CE3C1CF6F221BAC60BC4BFB294DBD71A6A85 
 Research(for website):
 
 Education: Write articles that people can read to learn about different topics such as phishing scams, two factor authentication, how to write a strong password, etc
