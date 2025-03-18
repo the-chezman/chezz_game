@@ -35,40 +35,40 @@ valid_moves = [] # displays all valid squares of movement, blank for later use
 
 # sets up images for pieces
 
-white_pawn = pygame.image.load("chess_game/assets_chess/white_pawn.png") # loads image into variable
+white_pawn = pygame.image.load("assets_chess/white_pawn.png") # loads image into variable
 white_pawn = pygame.transform.scale(white_pawn, (80, 80)) # scales image to fit in square
 white_pawn_small = pygame.transform.scale(white_pawn, (45, 45)) # scales image to fit in side bar (after capture)
-black_pawn = pygame.image.load("chess_game/assets_chess/black_pawn.png")
+black_pawn = pygame.image.load("assets_chess/black_pawn.png")
 black_pawn = pygame.transform.scale(black_pawn, (80, 80))
 black_pawn_small = pygame.transform.scale(black_pawn, (45, 45))
-white_rook = pygame.image.load("chess_game/assets_chess/white_rook.png")
+white_rook = pygame.image.load("assets_chess/white_rook.png")
 white_rook = pygame.transform.scale(white_rook, (80, 80))
 white_rook_small = pygame.transform.scale(white_rook, (45, 45))
-black_rook = pygame.image.load("chess_game/assets_chess/black_rook.png")
+black_rook = pygame.image.load("assets_chess/black_rook.png")
 black_rook = pygame.transform.scale(black_rook, (80, 80))
 black_rook_small = pygame.transform.scale(black_rook, (45, 45))
-white_knight = pygame.image.load("chess_game/assets_chess/white_knight.png")
+white_knight = pygame.image.load("assets_chess/white_knight.png")
 white_knight = pygame.transform.scale(white_knight, (80, 80))
 white_knight_small = pygame.transform.scale(white_knight, (45, 45))
-black_knight = pygame.image.load("chess_game/assets_chess/black_knight.png")
+black_knight = pygame.image.load("assets_chess/black_knight.png")
 black_knight = pygame.transform.scale(black_knight, (80, 80))
 black_knight_small = pygame.transform.scale(black_knight, (45, 45))
-white_bishop = pygame.image.load("chess_game/assets_chess/white_bishop.png")
+white_bishop = pygame.image.load("assets_chess/white_bishop.png")
 white_bishop = pygame.transform.scale(white_bishop, (80, 80))
 white_bishop_small = pygame.transform.scale(white_bishop, (45, 45))
-black_bishop = pygame.image.load("chess_game/assets_chess/black_bishop.png")
+black_bishop = pygame.image.load("assets_chess/black_bishop.png")
 black_bishop = pygame.transform.scale(black_bishop, (80, 80))
 black_bishop_small = pygame.transform.scale(black_bishop, (45, 45))
-white_king = pygame.image.load("chess_game/assets_chess/white_king.png")
+white_king = pygame.image.load("assets_chess/white_king.png")
 white_king = pygame.transform.scale(white_king, (80, 80))
 white_king_small = pygame.transform.scale(white_king, (45, 45))
-black_king = pygame.image.load("chess_game/assets_chess/black_king.png")
+black_king = pygame.image.load("assets_chess/black_king.png")
 black_king = pygame.transform.scale(black_king, (80, 80))
 black_king_small = pygame.transform.scale(black_king, (45, 45))
-white_queen = pygame.image.load("chess_game/assets_chess/white_queen.png")
+white_queen = pygame.image.load("assets_chess/white_queen.png")
 white_queen = pygame.transform.scale(white_queen, (80, 80))
 white_queen_small = pygame.transform.scale(white_queen, (45, 45))
-black_queen = pygame.image.load("chess_game/assets_chess/black_queen.png")
+black_queen = pygame.image.load("assets_chess/black_queen.png")
 black_queen = pygame.transform.scale(black_queen, (80, 80))
 black_queen_small = pygame.transform.scale(black_queen, (45, 45))
 
@@ -123,6 +123,95 @@ def draw_pieces():
             if selection == i:
                 pygame.draw.rect(screen, "blue", [black_locations[i][0] * 100 + 1, black_locations[i][1] * 100 + 1, 100, 100], 2) # draw blue rect
 
+#checks all options for pieces to move on board - valid spots
+
+def check_options(pieces, locations, turn):
+    moves_list = [] #initializes lists to be empty
+    all_moves_list = []
+
+    for i in range(len(pieces)): #goes through all pieces
+        location = locations[i] #checks current location
+        piece = pieces[i] #checks current piece
+
+        if piece == "pawn": # gives full check if the piece at this location is this piece
+            moves_list = check_pawn(location, turn) # will update list based on valid moves
+        """elif piece == "rook":
+            moves_list = check_rook(location, turn)
+        elif piece == "knight":
+            moves_list = check_knight(location, turn)
+        elif piece == "bishop":
+            moves_list = check_bishop(location, turn)
+        elif piece == "queen":
+            moves_list = check_queen(location, turn)
+        elif piece == "king":
+            moves_list = check_king(location, turn)"""
+
+        all_moves_list.append(moves_list)
+
+
+
+    return all_moves_list
+
+# all individual checking functions
+
+def check_pawn(position, color):
+    moves_list = []
+    #checks everything for white - going down board
+    if color == "white":
+        if (position[0], position[1] + 1) not in white_locations and (position[0], position[1] + 1) not in black_locations and position[1] < 7: # checking if square below that is empty and can be occupied by pawn, also prevents from going off board
+            moves_list.append((position[0], position[1] + 1)) #adds valid move
+        if (position[0], position[1] + 2) not in white_locations and (position[0], position[1] + 2) not in black_locations and position[1] == 1: # checking if 2 square below is empty and can be occupied by pawn, also restricts to starting row
+            moves_list.append((position[0], position[1] + 2))
+
+        if(position[0] + 1, position[1] + 1) in black_locations: #if white pawn can take black piece directly diagonal | right
+            moves_list.append((position[0] + 1, position[1], + 1))
+        if(position[0] - 1, position[1] + 1) in black_locations: #if white pawn can take black piece directly diagonal | left
+            moves_list.append((position[0] - 1, position[1], + 1))
+
+    #checks for black - going up board
+    else:
+        if (position[0], position[1] - 1) not in white_locations and (position[0], position[1] - 1) not in black_locations and position[1] > 0: 
+            moves_list.append((position[0], position[1] - 1)) 
+        if (position[0], position[1] - 2) not in white_locations and (position[0], position[1] - 2) not in black_locations and position[1] == 6: 
+            moves_list.append((position[0], position[1] - 2))
+
+        if(position[0] + 1, position[1] - 1) in white_locations: 
+            moves_list.append((position[0] + 1, position[1], - 1))
+        if(position[0] - 1, position[1] - 1) in white_locations: 
+            moves_list.append((position[0] - 1, position[1], - 1))
+
+    return moves_list
+
+
+#check valid moves for selected piece
+def check_valid_moves():
+    if turn_step < 2: # checks if white or black
+        options_list = white_options
+    else:
+        options_list = black_options
+
+    valid_options = options_list[selection] #should give back all valid moves for that selection already
+    return valid_options
+
+
+#draw moves
+
+def draw_valid(moves):
+    if turn_step < 2: #gets color of dots depending on whos turn
+        color = "red"
+    else:
+        color = "blue"
+
+    for i in range(len(moves)): #for all valid move squares
+        pygame.draw.circle(screen, color, (moves[i][0] * 100 + 50, moves[i][1] * 100 + 50), 5) #draw dot indicating its a legal move
+
+
+
+
+
+black_options = check_options(black_pieces, black_locations, "black")
+white_options = check_options(white_pieces, white_locations, "white")
+
 
 # sets up event handler
 
@@ -132,11 +221,58 @@ while run:
     screen.fill("dark gray") # background color is dark gray
     draw_board()
     draw_pieces()
+    if selection != -1:
+        valid_moves = check_valid_moves() #take out valid moves for just selected piece
+        draw_valid(valid_moves)
 
     # handles all events like keyboard presses and mouse clicks
     for event in pygame.event.get():  # checks each event
         if event.type == pygame.QUIT: # if event is click X button
             run = False
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1: # checks if mouse is clicked on left button
+            x_coord = event.pos[0] // 100 # x coord of mouse, floor divided by 100 due to grid size
+            y_coord = event.pos[1] // 100
+            click_coords = (x_coord, y_coord) #stores in tuple
+
+            if turn_step <= 1: #if white turn
+                if click_coords in white_locations: #if click is on white piece location
+                    selection = white_locations.index(click_coords) #self explanatory
+                    if turn_step == 0:
+                        turn_step = 1 # if hasn't selected, now it has selected
+                
+                if click_coords in valid_moves and selection != -1: #if valid and selected a piece
+                    white_locations[selection] = click_coords #selects piece if in hitbox vicinity of piece
+                    if click_coords in black_locations:
+                        black_piece = black_locations.index(click_coords) # captures black piece as part of white's valid move
+                        captured_pieces_white.append(black_pieces[black_piece]) #adds captured piece to white collection
+                        black_pieces.pop(black_piece) # pop is remove
+                        black_locations.pop(black_piece)
+                    
+                    black_options = check_options(black_pieces, black_locations, "black") #checks options of pieces
+                    white_options = check_options(white_pieces, white_locations, "white")
+                    turn_step = 2 #white move done
+                    selection = -1 #waiting for selection
+                    valid_moves = [] #reset valid moves
+
+            if turn_step > 1: #if black turn
+                if click_coords in black_locations: 
+                    selection = black_locations.index(click_coords) 
+                    if turn_step == 2:
+                        turn_step = 3 
+                
+                if click_coords in valid_moves and selection != -1: 
+                    black_locations[selection] = click_coords 
+                    if click_coords in white_locations:
+                        white_piece = white_locations.index(click_coords) 
+                        captured_pieces_black.append(white_pieces[white_piece]) 
+                        white_pieces.pop(white_piece) 
+                        white_locations.pop(white_piece)
+                    
+                    black_options = check_options(black_pieces, black_locations, "black")
+                    white_options = check_options(white_pieces, white_locations, "white")
+                    turn_step = 0 #black move done
+                    selection = -1 
+                    valid_moves = [] 
 
     pygame.display.flip() # clears display
 
