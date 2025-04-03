@@ -135,7 +135,7 @@ def check_options(pieces, locations, turn):
 
         if piece == "pawn": # gives full check if the piece at this location is this piece
             moves_list = check_pawn(location, turn) # will update list based on valid moves
-        """elif piece == "rook":
+        elif piece == "rook":
             moves_list = check_rook(location, turn)
         elif piece == "knight":
             moves_list = check_knight(location, turn)
@@ -144,7 +144,7 @@ def check_options(pieces, locations, turn):
         elif piece == "queen":
             moves_list = check_queen(location, turn)
         elif piece == "king":
-            moves_list = check_king(location, turn)"""
+            moves_list = check_king(location, turn)
 
         all_moves_list.append(moves_list)
 
@@ -153,6 +153,133 @@ def check_options(pieces, locations, turn):
     return all_moves_list
 
 # all individual checking functions
+
+def check_king(position, color):
+    moves_list = []
+    if color == "white":
+        enemies_list = black_locations
+        friends_list = white_locations
+    else:
+        enemies_list = white_locations
+        friends_list = black_locations
+
+    # 8 spots for king
+    targets = [(1,0), (1,1), (1,-1), (-1,0), (-1,1), (-1,-1), (0,1), (0,-1)]
+
+    for i in range(8): #can use code for knight as only target coordinates change
+        target = (position[0] + targets[i][0], position[1] + targets[i][1])
+
+        if target not in friends_list and 0 <= target[0] <= 7 and 0 <= target[1] <= 7: #checks valid moves
+            moves_list.append(target)
+    
+    return moves_list
+
+def check_queen(position, color):
+    moves_list = check_bishop(position, color) #can use existing functions to simplify queen's movement
+    second_list = check_rook(position, color) #queen is combo of rook and bishop movement
+
+    for i in range(len(second_list)):
+        moves_list.append(second_list[i]) #adds rook moves to bishop moves list
+    
+    return moves_list
+
+def check_bishop(position, color):
+    moves_list = []
+    if color == "white":
+        enemies_list = black_locations  #sets up enemies and friends lists
+        friends_list = white_locations
+    else:
+        enemies_list = white_locations
+        friends_list = black_locations
+
+    for i in range(4): # up-right, up-left, down-right, down-left
+        path = True 
+        chain = 1 
+
+        if i == 0:
+            x = 1
+            y = -1 #just changing coordinates
+        elif i == 1:
+            x = -1
+            y = -1
+        elif i == 2:
+            x = 1
+            y = 1
+        elif i == 3:
+            x = -1
+            y = 1
+
+        while path: # why this works: bishop has same path determination as rook (all valid spots in available directions) so can just change og coords to work 
+            if (position[0] + (chain * x), (position[1] + (chain * y))) not in friends_list and 0 <= position[0] + (chain * x) <= 7 and 0 <= position[1] + (chain * y) <= 7:
+                
+                moves_list.append((position[0] + (chain * x), (position[1] + (chain * y))))
+
+                if (position[0] + (chain * x), (position[1] + (chain * y))) in enemies_list: 
+                    path = False
+                chain += 1 
+            else:
+                path = False
+
+    return moves_list
+
+def check_knight(position, color):
+    moves_list = []
+    if color == "white":
+        
+        friends_list = white_locations #no enemies list needed since it wont be used
+    else:
+        
+        friends_list = black_locations
+
+    # 8 locations for knight
+    targets = [(1,2), (1,-2), (2,1), (2,-1), (-1,2), (-1,-2), (-2,1), (-2,-1)]
+
+    for i in range(8): #iterates through possible moves
+        target = (position[0] + targets[i][0], position[1] + targets[i][1])
+
+        if target not in friends_list and 0 <= target[0] <= 7 and 0 <= target[1] <= 7: #checks valid moves
+            moves_list.append(target)
+
+    return moves_list
+
+def check_rook(position, color):
+    moves_list = []
+    if color == "white":
+        enemies_list = black_locations #testing if locations that rook lands on are from team or enemy
+        friends_list = white_locations
+    else:
+        enemies_list = white_locations
+        friends_list = black_locations
+
+    for i in range(4): #down up left right spots
+        path = True #the rook can move, no blocking paths
+        chain = 1 #how many pieces can be taken
+
+        if i == 0:
+            x = 0
+            y = 1
+        elif i == 1:
+            x = 0
+            y = -1
+        elif i == 2:
+            x = 1
+            y = 0
+        elif i == 3:
+            x = -1
+            y = 0
+
+        while path: #while there exists a path -- depending on the increment of chain value, this will repeatedly check more valid moves of the rook, and checks for empty spaces
+            if (position[0] + (chain * x), (position[1] + (chain * y))) not in friends_list and 0 <= position[0] + (chain * x) <= 7 and 0 <= position[1] + (chain * y) <= 7:
+                #assumes path is still available
+                moves_list.append((position[0] + (chain * x), (position[1] + (chain * y))))
+
+                if (position[0] + (chain * x), (position[1] + (chain * y))) in enemies_list: #when rook hits an enemy piece, path ends there
+                    path = False
+                chain += 1 #checks other squares
+            else:
+                path = False # no more available path for rook to follow
+
+    return moves_list
 
 def check_pawn(position, color):
     moves_list = []
@@ -164,9 +291,9 @@ def check_pawn(position, color):
             moves_list.append((position[0], position[1] + 2))
 
         if(position[0] + 1, position[1] + 1) in black_locations: #if white pawn can take black piece directly diagonal | right
-            moves_list.append((position[0] + 1, position[1], + 1))
+            moves_list.append((position[0] + 1, position[1] + 1))
         if(position[0] - 1, position[1] + 1) in black_locations: #if white pawn can take black piece directly diagonal | left
-            moves_list.append((position[0] - 1, position[1], + 1))
+            moves_list.append((position[0] - 1, position[1] + 1))
 
     #checks for black - going up board
     else:
@@ -176,9 +303,9 @@ def check_pawn(position, color):
             moves_list.append((position[0], position[1] - 2))
 
         if(position[0] + 1, position[1] - 1) in white_locations: 
-            moves_list.append((position[0] + 1, position[1], - 1))
+            moves_list.append((position[0] + 1, position[1] - 1))
         if(position[0] - 1, position[1] - 1) in white_locations: 
-            moves_list.append((position[0] - 1, position[1], - 1))
+            moves_list.append((position[0] - 1, position[1] - 1))
 
     return moves_list
 
